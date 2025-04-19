@@ -3,7 +3,7 @@ import streamlit as st
 from backend import *
 
 
-st.set_page_config(layout="wide")
+st.set_page_config(layout='wide')
 
 
 
@@ -73,29 +73,29 @@ with tab2:
             row2_tab1[3].write(f'Залишилось {d} днів {h} годин {m} хвилин {s} секунд')
 
 with tab3:
-    st.markdown("### Редагувати події")
+    st.markdown('## Редагувати події')
     for index, event in enumerate(events):
         with st.expander(f"{event['event']} ({event['date']} {event['time']})", expanded=False):
-            new_event = st.text_input("Назва", value=event['event'], key=f"event_{index}")
-            new_date = st.date_input("Дата", value=datetime.strptime(event['date'], "%d-%m-%Y"),
-                                     key=f"date_{index}")
-            new_time = st.time_input("Час", value=datetime.strptime(event['time'], "%H:%M").time(),
-                                     key=f"time_{index}")
+            new_event = st.text_input('Назва', value=event['event'], key=f'event_{index}')
+            new_date = st.date_input('Дата', value=datetime.strptime(event['date'], '%d-%m-%Y'),
+                                     key=f'date_{index}')
+            new_time = st.time_input('Час', value=datetime.strptime(event['time'], '%H:%M').time(),
+                                     key=f'time_{index}')
 
             row_tab3 = st.columns(8)
             with row_tab3[0]:
-                if st.button("Зберегти зміни", key=f"save_{index}"):
+                if st.button('Зберегти зміни', key=f'save_{index}'):
                     events[index] = {
                         'event': new_event,
-                        'date': new_date.strftime("%d-%m-%Y"),
-                        'time': new_time.strftime("%H:%M")
+                        'date': new_date.strftime('%d-%m-%Y'),
+                        'time': new_time.strftime('%H:%M')
                     }
                     save_events(JSON_FILENAME, events)
                     st.success("Оновлено!")
                     st.rerun()
             with row_tab3[7]:
-                if st.button("Видалити подію", key=f"delete_{index}"):
+                if st.button('Видалити подію', key=f'delete_{index}'):
                     events.pop(index)
                     save_events(JSON_FILENAME, events)
-                    st.warning("Подію видалено!")
+                    st.warning('Подію видалено!')
                     st.rerun()
